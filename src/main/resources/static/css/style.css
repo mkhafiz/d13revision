@@ -1,0 +1,16 @@
+h1 {
+    color: aqua;
+}
+
+h2 {
+    color: burlywood;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 5px;
+}
