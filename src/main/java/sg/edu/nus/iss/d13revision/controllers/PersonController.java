@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.nus.iss.d13revision.models.Person;
+import sg.edu.nus.iss.d13revision.models.PersonForm;
 import sg.edu.nus.iss.d13revision.services.PersonService;
 
 @Controller
@@ -37,6 +39,7 @@ public class PersonController {
         return "index";
     }
 
+    //Test, "this is referring to HTML file"
     @RequestMapping(value = "/testRetrieve", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody List<Person> getAllPersons() {
         personList = perSvc.getPersons();
@@ -50,5 +53,24 @@ public class PersonController {
         model.addAttribute("persons", personList);
 
         return "personList";
+    }
+
+    @RequestMapping(value = "/addPerson", method = RequestMethod.GET)
+    public String showAddPersonPage(Model model) {
+        PersonForm pForm = new PersonForm();
+        model.addAttribute("personForm", pForm);
+        return "addPerson";
+    }
+
+    @RequestMapping(value = "/addPerson", method = RequestMethod.POST)
+    public String savePerson(Model model, @ModelAttribute("personForm") PersonForm personForm) {
+        String fNmame = personForm.getFirstName();
+        String lNmame = personForm.getLastName();
+
+        if (fNmame != null && fNmame.length() > 0 && lNmame != null && lNmame.length() > 0) {
+
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        return "addPerson";
     }
 }
