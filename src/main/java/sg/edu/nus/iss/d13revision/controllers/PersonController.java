@@ -64,10 +64,14 @@ public class PersonController {
 
     @RequestMapping(value = "/addPerson", method = RequestMethod.POST)
     public String savePerson(Model model, @ModelAttribute("personForm") PersonForm personForm) {
-        String fNmame = personForm.getFirstName();
-        String lNmame = personForm.getLastName();
+        String fName = personForm.getFirstName();
+        String lName = personForm.getLastName();
 
-        if (fNmame != null && fNmame.length() > 0 && lNmame != null && lNmame.length() > 0) {
+        if (fName != null && fName.length() > 0 && lName != null && lName.length() > 0) {
+            Person newPerson = new Person(fName, lName);
+            perSvc.addPerson(newPerson);
+
+            return "redirect:/personList";
 
         }
         model.addAttribute("errorMessage", errorMessage);
